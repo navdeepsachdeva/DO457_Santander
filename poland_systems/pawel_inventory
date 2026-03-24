@@ -1,0 +1,49 @@
+## INI FORMAT ##
+utility.lab.example.com ansible_become_method=ansible.builtin.sudo
+
+[all:vars]
+floor_level="Level 3 Inventory file or script group vars"
+
+[cisco]
+iosxe1.lab.example.com
+iosxe2.lab.example.com floor_level="Level 8 Inventory file"
+
+
+[juniper]
+junos1.lab.example.com
+junos2.lab.example.com
+
+[arista]
+arista1.lab.example.com
+arista2.lab.example.com
+
+
+[control]
+workstation.lab.example.com ansible_become_method=ansible.builtin.sudo
+
+# [cisco:vars]
+# ansible_connection=ansible.netcommon.network_cli
+# ansible_network_os=cisco.ios.ios
+# ansible_command_timeout=120
+# 
+# [arista:vars]
+# ansible_connection=ansible.netcommon.network_cli
+# ansible_network_os=arista.eos.eos
+
+# ansible_become=true
+# ansible_become_method=ansible.netcommon.enable
+
+
+# [juniper:vars]
+# ansible_connection=ansible.netcommon.netconf
+# ansible_network_os=junipernetworks.junos.junos
+# ansible_command_timeout=120
+
+# [datacenter:children]
+# cisco
+# arista
+# 
+# [range]
+# 192.168.1.[1:18:3]
+# 192.168.[1:4].[5:8]
+# host[1:5].lab.example.com

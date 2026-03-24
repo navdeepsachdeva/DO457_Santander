@@ -1,0 +1,42 @@
+- name: Concept on Linux Device
+  hosts: utility*
+  gather_facts: false
+  remote_user: devops
+  # become: true
+  tasks:
+    - name: Create File 1
+      ansible.builtin.copy:
+        content: You should generally avoid the shorthand form and use the normal form. Syntax highlighting tools in text editors such as VS Code can help you more effectively if you use the normal format than if you use the shorthand format.
+        dest: /tmp/f1
+
+    - name: Create File 2
+      ansible.builtin.copy:
+        content: >
+          You should generally avoid the shorthand form and use the normal form.
+          Syntax highlighting tools in text editors
+          such as VS Code can help you more effectively
+          if you use the normal format than if you use the shorthand format.
+        dest: /tmp/f2
+
+    - name: Create File 3
+      ansible.builtin.copy:
+        content: |
+          You should generally avoid the shorthand form and use the normal form.
+          Syntax highlighting tools in text editors
+          such as VS Code can help you more effectively
+          if you use the normal format than if you use the shorthand format.
+        dest: /tmp/f3
+
+- name: Cisco Banner
+  hosts: iosxe1*
+  gather_facts: false
+  tasks:
+    - name: Configure the login banner
+      cisco.ios.ios_banner:
+        banner: motd
+        text: >
+        # text: |
+          Hello Jodi
+          How are you Doing
+          Learning New things
+        state: present

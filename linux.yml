@@ -1,0 +1,25 @@
+- name: Concept on Linux Device
+  hosts: utility*
+  gather_facts: false
+  remote_user: devops
+  tasks:
+    - name: Create First File
+      ansible.builtin.copy:
+        content: "Hello Pawel from Santander"
+        dest: /tmp/f1
+
+    # - name: Create a new user in vManage
+    #   cisco.catalystwan.users:
+    #     mode: create
+    #     username: 'johndoe'
+    #     password: 'securepassword'
+    #     description: 'John Doe user'
+    #     group:
+    #       - 'admin'
+    # - name: Create Second File
+    #   ansible.builtin.copy:
+    #     content: "Hello Jodi from Belgium"
+    #     dest: /tmp/f2
+    # Namespace.collection.module
+    # Namespace.collection.plugin
+    # Namespace.collection.module

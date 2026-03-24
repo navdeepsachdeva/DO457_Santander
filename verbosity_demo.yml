@@ -1,0 +1,38 @@
+- name: Cisco First Playbook
+  hosts: iosxe1*
+  gather_facts: false
+  remote_user: student
+  tasks:
+    - name: Print Variable
+      ansible.builtin.debug:
+        msg: "Connection for {{ inventory_hostname }}= {{ ansible_connection }}"
+        # var: ansible_connection
+    
+    - name: Change Description for GI1
+      cisco.ios.ios_interfaces:
+        config:
+          - name: GigabitEthernet1
+            description: "Jodi Learning Ansible 5"
+            enabled: true
+      register: captured
+
+    # - name: Reboot the managed nodes
+    #   cisco.ios.ios_command:
+    #     commands:
+    #       - command: 'reload'
+    #         prompt: 'Proceed with reload\?'
+    #         answer: 'y'
+
+    - name: Print Detailed Output
+      ansible.builtin.debug:
+        msg: "{{ captured }}"
+        verbosity: 2
+
+    - name: Print Selected Output
+      ansible.builtin.debug:
+        msg: "{{ captured.commands }}"
+        verbosity: 1
+
+    # - name: GI1 Changes Done
+    #   ansible.builtin.debug:
+    #     msg: "YES GI1 has changed"

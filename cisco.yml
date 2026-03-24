@@ -1,0 +1,25 @@
+- name: Cisco First Playbook
+  hosts:
+    - iosxe1*
+    - iosxe2*
+  # hosts: iosxe1*,iosxe2*
+  # hosts: iosxe1*
+  gather_facts: false
+  tasks:
+    - name: Change Description for GI1
+      cisco.ios.ios_interfaces:
+        config:
+          - name: GigabitEthernet1
+            description: "Jodi Learning Ansible 1"
+            enabled: true
+
+    - name: Change Description for GI2
+      cisco.ios.ios_interfaces:
+        config:
+          - name: GigabitEthernet2
+            description: "Pawel Joined as well"
+            enabled: true
+
+    - name: Save Configuration
+      cisco.ios.ios_config:
+        save_when: always

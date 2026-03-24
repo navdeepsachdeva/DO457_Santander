@@ -1,0 +1,41 @@
+- name: Dependecy Task with handlers
+  hosts: iosxe1*
+  gather_facts: false
+  tasks:
+    - name: Change Description for GI1
+      cisco.ios.ios_interfaces:
+        config:
+          - name: GigabitEthernet1
+            description: "Jodi Learning Ansible ME"
+            enabled: true
+      notify:
+        - Save Configuration
+        - GI1 Changes Done
+
+    - name: Change Description for GI2
+      cisco.ios.ios_interfaces:
+        config:
+          - name: GigabitEthernet2
+            description: "Pawel Joined as well"
+            enabled: true
+      notify:
+        - Save Configuration
+        - GI2 Changes Done
+
+  handlers:
+    - name: NO ONE CALLS HIM
+      ansible.builtin.debug:
+      # ansible.builtin.debug:
+        msg: "USE LESS HANDLER"
+
+    - name: GI1 Changes Done
+      ansible.builtin.debug:
+        msg: "YES GI1 has changed"
+
+    - name: GI2 Changes Done
+      ansible.builtin.debug:
+        msg: "YES GI2 has changed"
+
+    - name: Save Configuration
+      cisco.ios.ios_config:
+        save_when: always

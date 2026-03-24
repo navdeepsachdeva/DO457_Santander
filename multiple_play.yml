@@ -1,0 +1,60 @@
+- name: Cisco First Playbook
+  hosts: iosxe1*
+  gather_facts: false
+  remote_user: student
+  tasks:
+    - name: Change Description for GI1
+      cisco.ios.ios_interfaces:
+        config:
+          - name: GigabitEthernet1
+            description: "Jodi Learning Ansible 1"
+            enabled: true
+
+    - name: Save Configuration
+      cisco.ios.ios_config:
+        save_when: always
+
+- name: Concept on Linux Device
+  hosts: u*
+  gather_facts: false
+  remote_user: devops
+  tasks:
+    - name: Create First File
+      ansible.builtin.copy:
+        content: "Hello Pawel from Santander"
+        dest: /tmp/f1
+        mode: "0644"
+
+    - name: Create Second File
+      ansible.builtin.copy:
+        content: "Hello Jodi from Belgium"
+        dest: /tmp/f2
+        mode: "0644"
+
+- name: Juniper Play
+  hosts: junos1.lab.example.com
+  gather_facts: false
+  remote_user: student
+  tasks:
+    - name: Open 830 port on Juniper Device
+      junipernetworks.junos.junos_netconf:
+        state: present
+        netconf_port: 830
+      when: meme is not defined
+      vars:
+        ansible_connection: ansible.netcommon.network_cli
+
+    - name: Back up Junos configurations
+      junipernetworks.junos.junos_config:
+        backup: true
+        backup_options:
+          filename: me.cfg
+          dir_path: ./backups
+
+    - name: Close 830 port on Juniper Device
+      when: meme is not defined
+      vars:
+        ansible_connection: ansible.netcommon.network_cli
+      junipernetworks.junos.junos_netconf:
+        state: absent
+        netconf_port: 830
