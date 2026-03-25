@@ -1,0 +1,20 @@
+- name: Variable Demo
+  hosts: all
+  gather_facts: false
+
+  # Level 13 User Interaction Variable floor_survey
+  # Development Env only
+  #  vars_prompt not compatible with Ansible Controller GUI
+  # vars_prompt:
+  #   - name: floor_survey
+  #     prompt: "Which floor is your office ?"
+  #     private: false
+
+  tasks:
+    - name: Print Variable
+      ansible.builtin.debug:
+        msg: >
+          {{ inventory_hostname }} == {{ floor_survey }}
+          and Color {{ wall_color }} with
+          food choices {{ food_options }}
+        

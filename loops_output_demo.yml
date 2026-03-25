@@ -1,0 +1,51 @@
+- name: Loop from Facts/Output
+  hosts: iosxe1*
+  tasks:
+    - name: Collect Custom Facts for CISCO
+      cisco.ios.ios_facts:
+        gather_network_resources: 
+          - vlans
+          - acls
+          - snmp_server
+          - ntp_global
+          - interfaces
+      register: ios_jodi
+      when: ansible_network_os == "cisco.ios.ios"
+
+    - name: Print All Facts
+      ansible.builtin.debug:
+        msg: "{{ ios_jodi }}"
+      when: ansible_network_os == "cisco.ios.ios"
+
+    - name: Create Directory
+      ansible.builtin.file:
+        path: "{{ inventory_hostname }}"
+        mode: "0755"
+        state: directory
+
+    - name: Print vlans in loop
+      ansible.builtin.debug:
+        msg: "{{ item }}" 
+      loop: "{{ ios_jodi.ansible_facts.ansible_network_resources.vlans }}"
+
+    - name: Store Vlans in File
+      ansible.builtin.debug:
+        msg: |
+          Staring Information for {{ item['vlan_id'] }}
+          Vlan Name     = {{ item['name'] }}
+          Vlan ID       = {{ item['vlan_id'] }}
+          Vlan MTU      = {{ item['mtu'] }}
+          Vlan State    = {{ item['state'] }}
+          Vlan shutdown = {{ item['shutdown'] }}
+      loop: "{{ ios_jodi.ansible_facts.ansible_network_resources.vlans }}"
+      when: ansible_network_os == "cisco.ios.ios"
+
+    #
+    - name: Print IOS interfaces in File
+      ansible.builtin.debug:
+        msg: |
+          Name        = {{ item['name'] }}
+          Desciption  = {{ item['description'] }}
+      loop: "{{ ios_jodi.ansible_facts.ansible_network_resources.interfaces }}"
+      when: ansible_network_os == "cisco.ios.ios"
+

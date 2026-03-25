@@ -1,0 +1,40 @@
+- name: failed_when / fail module/ assert module
+  hosts: all
+  gather_facts: false
+  remote_user: student
+  # ignore_errors: true
+  tasks:
+    - name: Collect Custom Facts
+      cisco.ios.ios_facts:
+        gather_subset: all
+
+    - name: Print Python Version
+      ansible.builtin.debug:
+        msg: "{{ ansible_facts['net_python_version'] }}"
+      # failed_when: ansible_facts['net_python_version'] <= "3.9.20"
+
+    # - name: Fail playbook usinf fail modules
+    #   ansible.builtin.fail:
+    #     msg: "Python lower than 3.9.20 Current = {{ ansible_facts['net_python_version'] }}"
+    #   when: ansible_facts['net_python_version'] <= "3.9.20"
+
+    - name: Fail playbook using assert modules
+      ansible.builtin.assert:
+        that:
+          - ansible_facts['net_python_version'] >= "3.9.20"
+          - ansible_network_os == "cisco.ios.ios"
+        fail_msg: "Python lower than 3.9.20 Current = {{ ansible_facts['net_python_version'] }}"
+        success_msg: "All Pre-Requisites Match"
+
+    - name: Change Description for GI1
+      cisco.ios.ios_interfaces:
+        config:
+          - name: GigabitEthernet1
+            description: "Jodi Learning Ansible 1"
+            enabled: true
+    
+
+
+    - name: Save Configuration
+      cisco.ios.ios_config:
+        save_when: always

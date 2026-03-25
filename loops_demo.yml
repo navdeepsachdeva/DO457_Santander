@@ -1,0 +1,42 @@
+- name: Loops Demo Playbook
+  hosts: iosxe1*
+  gather_facts: false
+  vars_files:
+    - vars/outside_vars.yml
+  tasks:
+    - name: Print Simple List
+      ansible.builtin.debug:
+        msg: "{{ item }}"
+      loop: "{{ simple_list }}"
+      # with_items: "{{ simple_list }}"
+
+    - name: Print Complex List
+      ansible.builtin.debug:
+        msg: >
+          {{ item.eth_name }} //
+          {{ item['eth_desc'] }} //
+          {{ item['eth_state'] }}
+      loop: "{{ complex_list }}"
+      # with_list: "{{ complex_list }}"
+
+    - name: Print Ethernet Dictionary
+      ansible.builtin.debug:
+        msg: "{{ item['key'] }} ++ {{ item['value'] }}"
+        # msg: "{{ item }}"
+      loop: "{{ eth_dict | dict2items }}"
+      # with_dict: "{{ eth_dict }}"
+
+    - name: Print Sequence
+      ansible.builtin.debug:
+        # msg: "GigabitEthernet{{ item }}"
+        msg: "{{ item }}"
+      with_sequence: start=0 end=4 format=GigabitEthernet%x
+
+    - name: Change Description for {{ item['eth_name'] }}
+      cisco.ios.ios_interfaces:
+        config:
+          - name: "{{ item['eth_name'] }}"
+            description: "{{ item['eth_desc'] | upper }}"
+            enabled: "{{ item['eth_state'] }}"
+      loop: "{{ complex_list }}"
+    # Loops Started from Ansible 2.5

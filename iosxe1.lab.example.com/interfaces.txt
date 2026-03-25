@@ -1,0 +1,2 @@
+Interface 1 = GigabitEthernet1
+Interface 2 = GigabitEthernet2

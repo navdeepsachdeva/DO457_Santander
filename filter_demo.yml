@@ -1,0 +1,25 @@
+- name: Filters Demo
+  hosts: iosxe1*
+  gather_facts: false
+  vars:
+    myip: '192.0.2.5/24'
+  vars_files:
+    - vars/outside_vars.yml
+  tasks:
+    - name: Text Filter
+      ansible.builtin.debug:
+        msg: >
+          {{ ansible_user | upper }} with 
+          {{ ansible_connection | capitalize }} and 
+          {{ inventory_hostname | length }}
+
+    - name: IP Filters
+      ansible.builtin.debug:
+        msg: "{{ '192.0.2.5/24' | ansible.utils.ipaddr('next_usable') }}"
+        #msg: "{{ myip | ansible.utils.ipaddr('next_usable') }}"
+        # msg: "{{ ip_list | ansible.utils.ipv4('revdns') }}"
+        # msg: "{{ ip_list | ansible.utils.ipv4('broadcast') }}"
+        # msg: "{{ ip_list | ansible.utils.ipv4('private') }}"
+        # msg: "{{ ip_list | ansible.utils.ipv4('public') }}"
+        # msg: "{{ ip_list | ansible.utils.ipv4 }}"
+        # msg: "{{ ip_list | ansible.utils.ipaddr | ansible.utils.ipv4 }}"

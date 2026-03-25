@@ -1334,3 +1334,8 @@ found unexpected ':'
 2026-03-24T11:10:46.686195+00:00 ERROR 'ansible_navigator.actions.collections._parse' /usr/share/ansible/collections/ansible_collections/redhat/satellite/roles/subnets/meta/main.yml Failed to find main.yml for role in redhat.satellite.
 2026-03-24T11:10:46.686237+00:00 ERROR 'ansible_navigator.actions.collections._parse' /usr/share/ansible/collections/ansible_collections/redhat/satellite/roles/sync_plans/meta/argument_specs.yml Failed to find argument_specs.yml for role in redhat.satellite.
 2026-03-24T11:10:46.686325+00:00 ERROR 'ansible_navigator.actions.collections._parse' /usr/share/ansible/collections/ansible_collections/redhat/satellite/roles/sync_plans/meta/main.yml Failed to find main.yml for role in redhat.satellite.
+2026-03-25T09:17:26.372415+00:00 WARNING 'ansible_navigator.run' Dirty exit, killing the pid
+2026-03-25T13:37:55.573921+00:00 WARNING 'ansible_navigator.run' Dirty exit, killing the pid
+2026-03-25T15:04:08.021478+00:00 WARNING 'ansible_navigator.run' Dirty exit, killing the pid
+2026-03-25T15:04:30.535975+00:00 WARNING 'ansible_navigator.run' Dirty exit, killing the pid
+2026-03-25T15:05:29.235510+00:00 WARNING 'ansible_navigator.run' Dirty exit, killing the pid

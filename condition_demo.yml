@@ -1,0 +1,33 @@
+- name: Loop from Facts/Output
+  hosts: iosxe1*,arista1*
+  tasks:
+    - name: Collect Custom Facts for CISCO
+      cisco.ios.ios_facts:
+        gather_subset: all
+        gather_network_resources: 
+          - vlans
+          - acls
+          - snmp_server
+          - ntp_global
+          - interfaces
+      when: ansible_network_os == "cisco.ios.ios"
+
+    - name: Print
+      ansible.builtin.copy:
+        content: "{{ ansible_facts | to_nice_yaml }}"
+        dest: info/{{ inventory_hostname }}.txt
+      when: ansible_network_os == "cisco.ios.ios"
+
+    - name: Print Cisco vlans in loop
+      ansible.builtin.debug:
+        msg: "{{ item }}" 
+      loop: "{{ ansible_facts.network_resources.vlans }}"
+      when:
+        - ansible_network_os == "cisco.ios.ios"
+        - ansible_facts.net_memfree_mb >=1900000 or ansible_facts['net_model']=="C8000V"
+        - my_var is not defined
+        - item['vlan_id'] >= 1004
+      # when: ansible_network_os == "cisco.ios.ios" and ansible_facts.net_memfree_mb >=1900000
+      
+
+

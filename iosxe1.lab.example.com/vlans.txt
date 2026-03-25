@@ -1,0 +1,6 @@
+Staring Information for 1005
+Vlan Name     = trnet-default
+Vlan ID       = 1005
+Vlan MTU      = 1500
+Vlan State    = active
+Vlan shutdown = enabled

@@ -26,13 +26,14 @@
     - name: Print Detailed Output
       ansible.builtin.debug:
         msg: "{{ captured }}"
-        verbosity: 2
+        # verbosity: 2
 
     - name: Print Selected Output
       ansible.builtin.debug:
         msg: "{{ captured.commands }}"
-        verbosity: 1
+        # verbosity: 1
 
-    # - name: GI1 Changes Done
-    #   ansible.builtin.debug:
-    #     msg: "YES GI1 has changed"
+    - name: GI1 Changes Done
+      ansible.builtin.debug:
+        msg: "YES GI1 has changed"
+      when: captured.changed == true

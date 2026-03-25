@@ -1,0 +1,54 @@
+- name: Facts Demo
+  hosts: iosxe1*
+  # cisco.ios.ios_facts collection min only
+  # gather_facts: false
+  tasks:
+    - name: Collect Custom Facts
+      cisco.ios.ios_facts:
+        # gather_network_resources: all
+        gather_network_resources: 
+          - vlans
+          - acls
+          - snmp_server
+          - ntp_global
+          - interfaces
+
+    - name: Print All Facts
+      ansible.builtin.debug:
+        msg: "{{ ansible_facts }}"
+
+    - name: Create Directory
+      ansible.builtin.file:
+        path: "{{ inventory_hostname }}"
+        mode: "0755"
+        state: directory
+      
+    - name: Store ACL in File
+      ansible.builtin.copy:
+        dest: "{{ inventory_hostname }}/acl.txt"
+        content: |
+          ACL = {{ ansible_facts['network_resources']['acls'] | to_nice_yaml }}
+
+    - name: Store interfaces in File
+      ansible.builtin.copy:
+        dest: "{{ inventory_hostname }}/interfaces.txt"
+        content: |
+          Interface 1 = {{ ansible_facts['network_resources']['interfaces'][0]['name'] }}
+          Interface 2 = {{ ansible_facts['network_resources']['interfaces'][1]['name'] }}
+
+    - name: Store Vlans in File
+      ansible.builtin.copy:
+        dest: "{{ inventory_hostname }}/vlans.txt"
+        content: |
+          vlan ID 1 = {{ ansible_facts['network_resources']['vlans'][0]['vlan_id'] }}
+          vlan ID 2 = {{ ansible_facts['network_resources']['vlans'][1]['vlan_id'] }}
+          vlan ID 3 = {{ ansible_facts['network_resources']['vlans'][2]['vlan_id'] }}
+          vlan ID 4 = {{ ansible_facts['network_resources']['vlans'][3]['vlan_id'] }}
+          vlan ID 5 = {{ ansible_facts['network_resources']['vlans'][4]['vlan_id'] }}
+    # - name: Change Description for GI1
+    #   cisco.ios.ios_interfaces:
+    #     config:
+    #       - name: GigabitEthernet1
+    #         description: "Jodi Learning Ansible"
+    #         enabled: true
+    #   when: ansible_facts['net_python_version'] > "4"

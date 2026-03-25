@@ -1,0 +1,54 @@
+- name: Facts Demo
+  hosts: iosxe1*,junos1*
+  # cisco.ios.ios_facts collection min only
+  # gather_facts: false
+  tasks:
+    - name: Collect Custom Facts for CISCO
+      cisco.ios.ios_facts:
+        gather_network_resources: 
+          - vlans
+          - acls
+          - snmp_server
+          - ntp_global
+          - interfaces
+      register: ios_jodi
+      when: ansible_network_os == "cisco.ios.ios"
+
+    - name: Print All Facts
+      ansible.builtin.debug:
+        msg: "{{ ios_jodi }}"
+      when: ansible_network_os == "cisco.ios.ios"
+
+    - name: Create Directory
+      ansible.builtin.file:
+        path: "{{ inventory_hostname }}"
+        mode: "0755"
+        state: directory
+      
+
+    - name: Store IOS interfaces in File
+      ansible.builtin.copy:
+        dest: "{{ inventory_hostname }}/interfaces.txt"
+        content: |
+          Type        = {{ ios_jodi['ansible_facts']['ansible_net_api'] }}
+          Interface 1 = {{ ios_jodi['ansible_facts']['ansible_network_resources']['interfaces'][0]['name'] }}
+          Interface 2 = {{ ios_jodi['ansible_facts']['ansible_network_resources']['interfaces'][1]['name'] }}
+      when: ansible_network_os == "cisco.ios.ios"
+
+    - name: Store Vlans in File
+      ansible.builtin.copy:
+        dest: "{{ inventory_hostname }}/vlans.txt"
+        content: |
+          vlan ID 1 = {{ ios_jodi['ansible_facts']['ansible_network_resources']['vlans'][0]['vlan_id'] }}
+          vlan ID 2 = {{ ios_jodi['ansible_facts']['ansible_network_resources']['vlans'][1]['vlan_id'] }}
+          vlan ID 3 = {{ ios_jodi['ansible_facts']['ansible_network_resources']['vlans'][2]['vlan_id'] }}
+          vlan ID 4 = {{ ios_jodi['ansible_facts']['ansible_network_resources']['vlans'][3]['vlan_id'] }}
+          vlan ID 5 = {{ ios_jodi['ansible_facts']['ansible_network_resources']['vlans'][4]['vlan_id'] }}
+      when: ansible_network_os == "cisco.ios.ios"
+    # - name: Change Description for GI1
+    #   cisco.ios.ios_interfaces:
+    #     config:
+    #       - name: GigabitEthernet1
+    #         description: "Jodi Learning Ansible"
+    #         enabled: true
+    #   when: ansible_facts['net_python_version'] > "4"

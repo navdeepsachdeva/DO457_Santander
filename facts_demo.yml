@@ -1,0 +1,37 @@
+- name: Facts Demo
+  hosts: iosxe1*
+  # cisco.ios.ios_facts collection min only
+  # gather_facts: false
+  tasks:
+    - name: Collect Custom Facts
+      cisco.ios.ios_facts:
+        gather_subset: all
+
+    - name: Print All Facts
+      ansible.builtin.debug:
+        msg: "{{ ansible_facts }}"
+      
+    - name: Store Facts in File
+      ansible.builtin.copy:
+        dest: info/{{ inventory_hostname }}.txt
+        content: |
+          API           = {{ ansible_net_api }}
+          API           = {{ ansible_facts.net_api }}
+          API           = {{ ansible_facts['net_api'] }}
+          Hostname      = {{ ansible_facts['net_hostname'] }}
+          Type          = {{ ansible_facts['net_iostype'] }}
+          Model         = {{ ansible_facts['net_model'] }}
+          Python        = {{ ansible_facts['net_python_version'] }}
+          Serial Number = {{ ansible_facts['net_serialnum'] }}
+          OS            = {{ ansible_facts['net_system'] }}
+          Version       = {{ ansible_facts['net_version'] }}
+          Free Memory   = {{ ansible_facts['net_memfree_mb'] }}
+          Total Memory   = {{ ansible_facts['net_memtotal_mb'] }}
+
+    - name: Change Description for GI1
+      cisco.ios.ios_interfaces:
+        config:
+          - name: GigabitEthernet1
+            description: "Jodi Learning Ansible"
+            enabled: true
+      when: ansible_facts['net_python_version'] > "4"

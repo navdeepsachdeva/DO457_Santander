@@ -1,0 +1,11 @@
+- name: Linux Facts
+  hosts: utility*
+  gather_facts: true
+  tasks:
+    - name: Print
+      ansible.builtin.debug:
+        msg: |
+          Hostname    = {{ansible_facts['hostname']}}
+          FQDN        = {{ ansible_facts['fqdn'] }}
+          IP          = {{ansible_default_ipv4.address}}
+          OS          = {{ansible_distribution}}

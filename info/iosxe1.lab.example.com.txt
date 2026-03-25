@@ -1,0 +1,10 @@
+API           = cliconf
+Hostname      = iosxe1.lab.example.com
+Type          = IOS-XE
+Model         = C8000V
+Python        = 3.9.13
+Serial Number = 98P3ZN41R6I
+OS            = ios
+Version       = 17.06.02
+Free Memory   = 1839648.37109375
+Total Memory   = 2028097.13671875

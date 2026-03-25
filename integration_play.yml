@@ -1,0 +1,27 @@
+- name: Integration Playbook
+  hosts: iosxe1*
+  gather_facts: false
+  tasks:
+    # - name: Import/static a Task File
+    #   ansible.builtin.include_tasks:
+    #     file: tasks/setup_interfaces.yml
+    #   when: youme is not defined
+
+    # - name: Include/dynamic a Task File
+    #   ansible.builtin.include_tasks:
+    #     file: tasks/collect_info.yml
+    #   when: youme is not defined
+    - name: Loop Tasks Files
+      # ansible.builtin.import_tasks:
+      ansible.builtin.include_tasks:
+        file: "{{ item }}"
+      loop:
+        - tasks/collect_info.yml
+        - tasks/setup_interfaces.yml
+      when: youme is not defined
+
+- name: Import Variable Playbook
+  ansible.builtin.import_playbook: variable_demo.yml
+    
+- name: Import MULTIPLE PLAY Playbook
+  ansible.builtin.import_playbook: multiple_play.yml

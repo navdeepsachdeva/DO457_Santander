@@ -1,2 +1,37 @@
 floor_level: "Level 14 Play vars_files"
 # floor_level: "CHANGE ME"
+
+simple_list:
+  - GigabitEthernet1
+  - GigabitEthernet2
+
+complex_list:
+  - eth_name: GigabitEthernet1
+    eth_desc: "Some Desc for GigabitEthernet1"
+    eth_state: true
+  - eth_name: GigabitEthernet2
+    eth_desc: "Some Desc for GigabitEthernet2"
+    eth_state: true
+
+eth_dict:
+  GigabitEthernet1: "Hello from Dict GigabitEthernet1"
+  GigabitEthernet2: "Hello from Dict GigabitEthernet2"
+  # key: value
+# eth_dict | dict2items
+# Dict_Items:
+#   - key: GigabitEthernet1
+#     value: "Hello from Dict GigabitEthernet1"
+#   - key: GigabitEthernet2
+#     value: "Hello from Dict GigabitEthernet2"
+
+ip_list:
+  - 172.25.250.254/24
+  - 55.44.33.22/8
+  - 10.10.2.20/8
+  - 192.168.2.15/24
+  - 100.24.45.24
+  - 192.268.2.15/24
+  - fe80::a1c0:e2e5:a201:8cfa/64
+  - 168.22.44.55/16
+
+
