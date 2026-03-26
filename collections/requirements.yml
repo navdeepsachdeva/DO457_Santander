@@ -1,0 +1,7 @@
+collections:
+  - name: cisco.fmcansible
+    version: 1.0.2
+
+  - name: /home/student/santander/cisco-asa-4.0.3.tar.gz
+  - name: redhat.rhel_system_roles
+

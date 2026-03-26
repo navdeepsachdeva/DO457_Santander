@@ -1,0 +1,53 @@
+- name: Facts Demo
+  hosts: juniper,arista,cisco
+  tasks:
+    - name: Collect Cisco Facts
+      when: ansible_network_os == "cisco.ios.ios"
+      block:
+        - name: Collect Custom Facts 
+          cisco.ios.ios_facts:
+            gather_subset: all
+          
+        - name: Store Facts in File
+          ansible.builtin.copy:
+            dest: facts/{{ inventory_hostname }}.txt
+            content: "{{ ansible_facts | to_nice_yaml }}"
+
+    - name: Collect Arista Facts
+      when: ansible_network_os == "arista.eos.eos"
+      block:
+        - name: Collect Custom Facts 
+          arista.eos.eos_facts:
+            gather_subset: all
+          
+        - name: Store Facts in File
+          ansible.builtin.copy:
+            dest: facts/{{ inventory_hostname }}.txt
+            content: "{{ ansible_facts | to_nice_yaml }}"
+
+    - name: Collect Juniper Facts
+      when: ansible_network_os == "junipernetworks.junos.junos"
+      block:
+        - name: Open 830 port on Juniper Device
+          junipernetworks.junos.junos_netconf:
+            state: present
+            netconf_port: 830
+          vars:
+            ansible_connection: ansible.netcommon.network_cli
+   
+        - name: Collect Custom Facts for Juniper 
+          junipernetworks.junos.junos_facts:
+            gather_subset: all
+          
+        - name: Store Facts in File
+          ansible.builtin.copy:
+            dest: facts/{{ inventory_hostname }}.txt
+            content: "{{ ansible_facts | to_nice_yaml }}"
+   
+        - name: Close 830 port on Juniper Device
+          vars:
+            ansible_connection: ansible.netcommon.network_cli
+          junipernetworks.junos.junos_netconf:
+            state: absent
+            netconf_port: 830
+

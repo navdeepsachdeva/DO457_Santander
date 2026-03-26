@@ -1,0 +1,23 @@
+---
+# tasks file for config_cisco
+
+- name: Configure DNS settings for {{ inventory_hostname }}
+  cisco.ios.ios_system:
+    domain_search: "{{ config_cisco_domain_search }}"
+    name_servers: "{{ config_cisco_name_servers }}"
+  notify:
+    - DNS Settings Fixed
+    
+- name: Configure SNMP settings
+  cisco.ios.ios_snmp_server:
+    state: "{{ config_cisco_snmp_state }}"
+    config:
+      location: "{{ config_cisco_snmp_location }}"
+      contact: "{{ config_cisco_snmp_contact }}"
+      communities: "{{ config_cisco_snmp_communities }}"
+  notify:
+    - SNMP Settings Done
+
+- name: Import a Task file in config_cisco
+  ansible.builtin.import_tasks:
+    file: task_extend.yml

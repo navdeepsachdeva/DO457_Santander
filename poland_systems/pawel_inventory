@@ -7,6 +7,8 @@ floor_level="Level 3 Inventory file or script group vars"
 [cisco]
 iosxe1.lab.example.com
 iosxe2.lab.example.com floor_level="Level 8 Inventory file"
+172.25.250.20
+172.25.250.21
 
 
 [juniper]

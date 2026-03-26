@@ -1,0 +1,6 @@
+---
+# handlers file for backup_cisco
+
+- name: Basic Facts Stored
+  ansible.builtin.debug:
+    msg: "Facts Stored in  {{ backup_cisco_dir }}/{{ inventory_hostname }}.txt"

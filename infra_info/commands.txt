@@ -1,0 +1,12 @@
+interface GigabitEthernet1
+  description 'Some Desc for GigabitEthernet1'
+interface GigabitEthernet2
+  description 'Some Desc for GigabitEthernet2'
+
+ntp server 172.25.23.240
+ntp server 172.25.23.230
+
+ip name-server 172.25.250.220
+ip name-server 172.25.250.221
+ip name-server 172.25.250.222
+ip name-server 172.25.250.223

@@ -1,0 +1,14 @@
+---
+# handlers file for interfaces_cisco
+
+- name: GI1 Changes Done
+  ansible.builtin.debug:
+    msg: "YES GI1 has changed"
+
+- name: GI2 Changes Done
+  ansible.builtin.debug:
+    msg: "YES GI2 has changed"
+
+- name: Save Configuration
+  cisco.ios.ios_config:
+    save_when: always

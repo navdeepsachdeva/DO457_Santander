@@ -1,0 +1,23 @@
+- name: Template Demo
+  hosts: cisco,arista
+  tasks:
+
+    - name: Collect Custom Facts
+      cisco.ios.ios_facts:
+        gather_subset: all
+      when: inventory_hostname in groups["cisco"]
+
+    - name: Collect Custom Facts
+      arista.eos.eos_facts:
+        gather_subset: all
+      when: inventory_hostname in groups["arista"]
+
+    - name: Template for Custom Simple Info
+      ansible.builtin.template:
+        src: templates/collect_complex_info.j2
+        dest: infra_info/systems.html
+
+        # - name: Template for Custom Simple Info
+        #   ansible.builtin.template:
+        #     src: templates/collect_simple_info.j2
+        #     dest: infra_info/{{ inventory_hostname }}.txt

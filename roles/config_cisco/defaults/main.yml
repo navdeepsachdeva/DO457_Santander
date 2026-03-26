@@ -1,0 +1,17 @@
+---
+# defaults file for config_cisco
+
+config_cisco_domain_search:
+  - lab.example.com
+  - example.com
+config_cisco_name_servers:
+  - 172.25.250.220
+
+config_cisco_snmp_state: merged
+config_cisco_snmp_location: 'Raleigh, NC'
+config_cisco_snmp_contact: 'Network Engineering | neteng@company.com'
+config_cisco_snmp_communities:
+  - name: rocommunity2n4g!
+    ro: true
+  - name: rwcommunityd7g$v
+    rw: true

@@ -1,0 +1,10 @@
+---
+# defaults file for interfaces_cisco
+
+interfaces_cisco_eth1_name: GigabitEthernet1
+interfaces_cisco_eth1_desc: "Eth1 Value from Defaults Level 2"
+interfaces_cisco_eth1_enabled: true
+
+interfaces_cisco_eth2_name: GigabitEthernet2
+interfaces_cisco_eth2_desc: "Eth2 Value from Defaults Level 2"
+interfaces_cisco_eth2_enabled: true

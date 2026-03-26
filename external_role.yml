@@ -1,0 +1,13 @@
+- name: Use External Role
+  hosts: iosxe1*
+  gather_facts: false
+  roles:
+    - role: cisco.fmcansible.device_upgrade
+    - role: redhat.rhel_system_roles.timesync
+
+  tasks:
+    - name: Task from Externa Collections
+      cisco.fmcansible.fmc_access_policies:
+        operation: getAccessPolicy
+        policy_id: "{{ access_policies[0].id }}"
+        register_as: access_policy

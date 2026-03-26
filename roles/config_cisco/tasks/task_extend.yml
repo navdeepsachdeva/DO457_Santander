@@ -1,0 +1,4 @@
+- name: External Task for Role config_cisco
+  ansible.builtin.command: sleep 2
+  notify:
+    - External_handler

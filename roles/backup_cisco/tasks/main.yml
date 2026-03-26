@@ -1,0 +1,23 @@
+---
+# tasks file for backup_cisco
+
+- name: Collect Custom Facts
+  cisco.ios.ios_facts:
+    gather_subset: all
+
+- name: Store Facts in File
+  ansible.builtin.copy:
+    dest: "{{ backup_cisco_dir }}/{{ inventory_hostname }}.txt"
+    content: |
+      API           = {{ ansible_facts['net_api'] }}
+      Hostname      = {{ ansible_facts['net_hostname'] }}
+      Type          = {{ ansible_facts['net_iostype'] }}
+      Model         = {{ ansible_facts['net_model'] }}
+      Python        = {{ ansible_facts['net_python_version'] }}
+      Serial Number = {{ ansible_facts['net_serialnum'] }}
+      OS            = {{ ansible_facts['net_system'] }}
+      Version       = {{ ansible_facts['net_version'] }}
+      Free Memory   = {{ ansible_facts['net_memfree_mb'] }}
+      Total Memory   = {{ ansible_facts['net_memtotal_mb'] }}
+  notify:
+    - Basic Facts Stored

@@ -1,0 +1,14 @@
+galaxy_info:
+  author: Jodi
+  description: Testing a Role
+  company: RedHat
+
+  license: license (GPL-2.0-or-later, MIT, etc)
+
+  min_ansible_version: 2.1
+
+  galaxy_tags: []
+
+dependencies:
+  # - role: backup_cisco
+  - role: config_cisco

@@ -1,0 +1,19 @@
+- name: Template Demo
+  hosts: iosxe1*
+  vars_files:
+    - vars/outside_vars.yml
+
+  tasks:
+    - name: Template for Custom Commands
+      ansible.builtin.template:
+        src: templates/commands.j2
+        dest: infra_info/commands.txt
+
+    - name: Fire Commands from File
+      cisco.ios.ios_config:
+        src: infra_info/commands.txt
+
+
+    # - name: Fire Commands from Template One Step
+    #   cisco.ios.ios_config:
+    #     src: templates/commands.j2

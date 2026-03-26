@@ -1,0 +1,46 @@
+<html>
+<head><title> Infrastructure Page </title></head>
+<body>
+<h4>
+
+  {% for sys in groups["all"] %}
+
+
+     {% if sys in groups["cisco"] %}
+	## Collect info for {{ hostvars[sys].inventory_hostname }} ##
+
+	CURRENT HOST	= {{ sys }}
+	API           	= {{ hostvars[sys].ansible_facts['net_api'] }}
+	Hostname      	= {{ hostvars[sys].ansible_facts['net_hostname'] }}
+	Type          	= {{ hostvars[sys].ansible_facts['net_iostype'] }}
+	Model         	= {{ hostvars[sys].ansible_facts['net_model'] }}
+	Python        	= {{ hostvars[sys].ansible_facts['net_python_version'] }}
+	Serial Number 	= {{ hostvars[sys].ansible_facts['net_serialnum'] }}
+	OS            	= {{ hostvars[sys].ansible_facts['net_system'] }}
+	Version       	= {{ hostvars[sys].ansible_facts['net_version'] }}
+	Free Memory   	= {{ hostvars[sys].ansible_facts['net_memfree_mb'] }}
+	Total Memory   	= {{ hostvars[sys].ansible_facts['net_memtotal_mb'] }}
+
+       {% elif sys in groups["arista"] %}
+	## Collect info for {{ hostvars[sys].inventory_hostname }} ##
+
+	CURRENT HOST	= {{ sys }}
+	API           	= {{ hostvars[sys].ansible_facts['net_api'] }}
+	Hostname      	= {{ hostvars[sys].ansible_facts['net_hostname'] }}
+	Type          	= {{ hostvars[sys].ansible_facts['net_iostype'] | default("Not Available") }}
+	Model         	= {{ hostvars[sys].ansible_facts['net_model'] }}
+	Python        	= {{ hostvars[sys].ansible_facts['net_python_version'] }}
+	Serial Number 	= {{ hostvars[sys].ansible_facts['net_serialnum'] }}
+	OS            	= {{ hostvars[sys].ansible_facts['net_system'] }}
+	Version       	= {{ hostvars[sys].ansible_facts['net_version'] }}
+	Free Memory   	= {{ hostvars[sys].ansible_facts['net_memfree_mb'] }}
+	Total Memory   	= {{ hostvars[sys].ansible_facts['net_memtotal_mb'] }}
+	MAC1		= {{ hostvars[sys].ansible_facts['net_interfaces']['Ethernet1']['macaddress'] }}
+	MAC2		= {{ hostvars[sys].ansible_facts['net_interfaces']['Management1']['macaddress'] }}
+
+     {% endif %}
+  {% endfor %}
+
+</h4>
+</body>
+</html>

@@ -1,0 +1,73 @@
+- name: Roles Demo
+  hosts: iosxe1*
+  gather_facts: false
+  pre_tasks:
+    - name: Pre Tasks - Collect Custom Facts
+      cisco.ios.ios_facts:
+        gather_subset: all
+
+    - name: Pre Tasks - Fail playbook using assert modules
+      ansible.builtin.assert:
+        that:
+          - ansible_facts['net_python_version'] >= "3.9.10"
+          - ansible_network_os == "cisco.ios.ios"
+        fail_msg: >
+          "Python lower than 3.9.20 
+          Current = {{ ansible_facts['net_python_version'] }}"
+        success_msg: "All Pre-Requisites Match"
+
+    - name: Pre Tasks - Save Configuration Before Update
+      cisco.ios.ios_config:
+        save_when: always
+        backup: true
+        backup_options:
+          filename: backup_{{ inventory_hostname }}.cfg
+          dir_path: ./backups
+      notify:
+        - Backup_Initial_Config
+
+    - name: Pre Tasks - Inform Custom before Update
+      ansible.builtin.command: sleep 2
+      notify:
+        - Services_Down
+ 
+  roles:
+    # - role: config_cisco
+    - role: interfaces_cisco
+      interfaces_cisco_eth1_desc: "Hello to GI1"
+      interfaces_cisco_eth2_desc: "Hello to GI2"
+
+  post_tasks:
+    - name: Post Tasks - Inform Custom After Update
+      ansible.builtin.command: sleep 2
+      notify:
+        - Services_Up
+  
+  tasks:
+
+    - name: Run Role based on condition
+      ansible.builtin.import_role:
+        name: backup_cisco
+      when: something is not defined
+
+    - name: Extra Task
+      ansible.builtin.command: sleep 2
+      notify:
+        - Extra_handler
+
+  handlers:
+    - name: Extra_handler
+      ansible.builtin.debug:
+        msg: "Extra Handler for Extra Task"
+
+    - name: Backup_Initial_Config
+      ansible.builtin.debug:
+        msg: "Initial Backup Done"
+    - name: Services_Down
+      ansible.builtin.debug:
+        msg: "Instagram Down Sleep Now"
+
+    - name: Services_Up
+      ansible.builtin.debug:
+        msg: "Instagram Up Start Wasting Time"
+

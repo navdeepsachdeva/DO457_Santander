@@ -1,0 +1,23 @@
+---
+# tasks file for interfaces_cisco
+
+- name: Change Description for {{ interfaces_cisco_eth1_name }}
+  cisco.ios.ios_interfaces:
+    config:
+      - name: "{{ interfaces_cisco_eth1_name }}"
+        description: "{{ interfaces_cisco_eth1_desc }}"
+        enabled: "{{ interfaces_cisco_eth1_enabled }}"
+  notify:
+    - Save Configuration
+    - GI1 Changes Done
+
+- name: Change Description for {{ interfaces_cisco_eth2_name }}
+  cisco.ios.ios_interfaces:
+    config:
+      - name: "{{ interfaces_cisco_eth2_name }}"
+        description: "{{ interfaces_cisco_eth2_desc }}"
+        enabled: "{{ interfaces_cisco_eth2_enabled }}"
+  notify:
+    - Save Configuration
+    - GI2 Changes Done
+

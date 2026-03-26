@@ -1,0 +1,20 @@
+<html>
+<head><title>Info Page {{ inventory_hostname }} </title></head>
+<body>
+<h4>
+
+	## Collect info for {{ inventory_hostname }} ##
+
+	API           	= {{ ansible_facts['net_api'] }}
+	Hostname      	= {{ ansible_facts['net_hostname'] }}
+	Type          	= {{ ansible_facts['net_iostype'] }}
+	Model         	= {{ ansible_facts['net_model'] }}
+	Python        	= {{ ansible_facts['net_python_version'] }}
+	Serial Number 	= {{ ansible_facts['net_serialnum'] }}
+	OS            	= {{ ansible_facts['net_system'] }}
+	Version       	= {{ ansible_facts['net_version'] }}
+	Free Memory   	= {{ ansible_facts['net_memfree_mb'] }}
+	Total Memory   	= {{ ansible_facts['net_memtotal_mb'] }}
+</h4>
+</body>
+</html>

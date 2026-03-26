@@ -3,7 +3,7 @@
   gather_facts: false
   tasks:
     # - name: Import/static a Task File
-    #   ansible.builtin.include_tasks:
+    #   ansible.builtin.import_tasks:
     #     file: tasks/setup_interfaces.yml
     #   when: youme is not defined
 

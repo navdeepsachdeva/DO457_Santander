@@ -1,0 +1,3 @@
+---
+# defaults file for backup_cisco
+backup_cisco_dir: backups

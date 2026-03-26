@@ -1,0 +1,14 @@
+---
+# handlers file for config_cisco
+
+- name: DNS Settings Fixed
+  ansible.builtin.debug:
+    msg: "DNS Servers Updated on {{ inventory_hostname }}"
+
+- name: SNMP Settings Done
+  ansible.builtin.debug:
+    msg: "SNMP Settings Updated on {{ inventory_hostname }}"
+
+- name: External_handler
+  ansible.builtin.debug:
+    msg: "Extra Handler for ROLE config_cisco"

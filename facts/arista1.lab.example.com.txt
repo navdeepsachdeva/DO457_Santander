@@ -1,0 +1,46 @@
+net_all_ipv4_addresses:
+- 172.25.250.24
+net_all_ipv6_addresses: []
+net_api: cliconf
+net_config: "show running-config\r\n% Invalid input (privileged mode required)\r\narista1.lab.example.com>"
+net_filesystems: []
+net_fqdn: arista1.lab.example.com
+net_gather_network_resources: []
+net_gather_subset:
+- default
+- interfaces
+- hardware
+- config
+net_hostname: arista1.lab.example.com
+net_interfaces:
+    Ethernet1:
+        bandwidth: 1000000000
+        description: ''
+        duplex: duplexFull
+        ipv4: {}
+        lineprotocol: up
+        macaddress: 52:54:00:90:96:0e
+        mtu: 9214
+        operstatus: connected
+        type: bridged
+    Management1:
+        bandwidth: 1000000000
+        description: ''
+        duplex: duplexFull
+        ipv4:
+            address: 172.25.250.24
+            masklen: 24
+        lineprotocol: up
+        macaddress: 52:54:00:14:55:74
+        mtu: 1500
+        operstatus: connected
+        type: routed
+net_memfree_mb: 10539.52734375
+net_memtotal_mb: 11862.55859375
+net_model: vEOS-lab
+net_neighbors: {}
+net_python_version: 3.9.13
+net_serialnum: 6B083BF453987AE136D211FD03CF15A4
+net_system: eos
+net_version: 4.30.1F
+network_resources: {}
